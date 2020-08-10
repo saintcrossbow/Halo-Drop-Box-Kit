@@ -1,0 +1,54 @@
+#!/bin/bash
+#Copyright(C) 2020  saintcrossbow@gmail.com
+#
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program.If not, see<http://www.gnu.org/licenses/>
+
+# Title: SigInt
+# Description: Bring in all sniff data for timed period
+
+if [ -z "$1" ]; then
+  # Default for 10 minute gathering
+  GATHER_FOR=600
+else
+  GATHER_FOR=$1
+fi
+
+echo "[*] Starting monitor mode for external WiFi adapter"
+airmon-ng start wlan1 1> /dev/null
+
+echo "[*] Starting bluetooth monitor"
+hciconfig hci up
+
+echo "[*] Starting WiFi monitoring..."
+wlanLog=sigint-wifi-and-beacons_$(date +'%Y-%m-%d-%H-%M').txt
+airodump-ng wlan1mon --beacons --output-format logcsv --write /loot/$wlanLog &
+wl_pid=$!
+
+echo "[*] Starting Bluetooth monitoring..."
+btLog=sigint-bluetooth_$(date +'%Y-%m-%d-%H-%M').txt
+bluelog -i hci -mnc -o /loot/$btLog -v &
+bt_pid=$!
+
+echo "[*] Gathering for $GATHER_FOR seconds"
+
+sleep $GATHER_FOR
+
+echo "[*] Stopping attack"
+kill $wl_pid
+wait $wl_pid
+kill $bt_pid
+wait $bt_pid
+
+airmon-ng stop wlan1mon
+sync

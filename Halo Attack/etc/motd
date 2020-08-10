@@ -1,0 +1,23 @@
+             _               ____    ___   
+  /\  /\__ _| | ___   __   _|___ \  / _ \           Kali 2020.2b-rpi3
+ / /_/ / _` | |/ _ \  \ \ / / __) || | | |          2020 Aug 1
+/ __  / (_| | | (_) |  \ V / / __/ | |_| |          Multivector drop box
+\/ /_/ \__,_|_|\___/    \_/ |_____(_)___/  
+
+Standard Tools
+--------------
+conn_eth0                   Reconnect to local network         
+outbound_test               Standard checks out-of-net         
+std_nmap [t]                Start common nmap using timing T  
+startvnc / stopvnc          Start desktop on 5901
+reverse_shell [ip] [port]   Constantly call back to C&C
+arm / disarm                Start selected payloads on boot
+
+* Set rhost, rport, and sigint under the /payloads directory
+
+External Tools
+--------------
+ap_timed_mine [f] [c]       Start a fuse F and attack WiFi for C
+chaff                       Start SSID spoofing
+sigint                      Sniff for WiFi and Bluetooth devices
+

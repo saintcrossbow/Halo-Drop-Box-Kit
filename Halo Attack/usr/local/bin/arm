@@ -1,0 +1,56 @@
+#!/bin/bash
+#Copyright(C) 2020  saintcrossbow@gmail.com
+#
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program.If not, see<http://www.gnu.org/licenses/>
+# Start items at boot
+
+case $1 in
+  "reverse-shell")
+    touch /payloads/start_rs
+        echo "Reverse shell armed"
+        ;;
+  "sigint")
+    touch /payloads/start_si
+        echo "SigInt payload armed"
+        ;;
+  "outbound-test")
+    touch /payloads/start_ot
+        echo "Outbound test payload armed"
+        ;;
+  "std-nmap")
+    touch /payloads/start_nmap
+        echo "Standard nmap test payload armed"
+        ;;
+  *)
+    echo "Arming Mode on Boot"
+        echo "Options:"
+        echo "reverse-shell    Start reverse shell"
+        echo "sigint           SigInt bluetooth and WiFi scan"
+        echo "outbound-test    Outbound test"
+        echo "std-nmap         Quiet nmap scan"
+        echo ""
+        if [ -f /payloads/start_rs ]; then
+          echo "[*] Reverse shell armed"
+        fi
+        if [ -f /payloads/start_si ]; then
+          echo "[*] SigInt payload armed"
+        fi
+        if [ -f /payloads/start_ot ]; then
+          echo "[*] Outbound test payload armed"
+        fi
+        if [ -f /payloads/start_nmap ]; then
+          echo "[*] Nmap payload armed"
+        fi
+    ;;
+esac
