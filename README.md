@@ -74,7 +74,7 @@ _On the ESP32:_
 
 ### Devices should now be in working state.
 
-##Halo Attack Device Usage
+## Halo Attack Device Usage
 ---
 _Commands_
 If you can't remember the commands, the device gives a cheat sheet on boot.
@@ -95,7 +95,7 @@ _Connection_
 * Optionally arm payloads
 	
 _Disconnect_
-Always shut down the device to avoid corruption; e.g. `shutdown -h now``
+* Always shut down the device to avoid corruption; e.g. `shutdown -h now``
 
 _Setting up Kit for Reverse Shell_
 1. Connect via WiFi to Halo Attack
@@ -120,6 +120,7 @@ _Setting up Kit for Reverse Shell_
   *Run `arm` to verify command
 
 _Tunneling through HaloRx_
+
 You can send your commands from your attack network through HaloRx to go directly to the Halo attack box using the `tunnel_nc` command. Using a basic netcat technique, the script redirect all traffic from one port sends direct to the Halo attack box. Usage:
 
 `tunnel_nc listenerPort targetIP targetPort`
