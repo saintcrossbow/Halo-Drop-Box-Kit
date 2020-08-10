@@ -11,6 +11,8 @@ The Halo drop box may be used to establish a connection directly to an attacker'
 ### Component 3: Halo MiniRecon Device
 A miniature device used to verify that the Halo drop box is running correctly without having to use other devices. In addition the device provides an at-a-glance view of the WiFi landscape. 
 
+![Example setup](https://github.com/saintcrossbow/Halo-Drop-Box-Kit/blob/master/Docs/KitPicture.jpg "Example Setup")
+
 ## Part List
 Your setup may vary, but a minimum will look something like this:
 * Raspberry Pi x 2
@@ -65,10 +67,10 @@ _On the HaloRx Raspberry Pi:_
 3. Make sure to make executable by using `chmod +x *`
 
 _On the ESP32:_
-a. Download the absolute latest Arduino IDE. Make sure you do not accidentally use a wrong previously installed version. Please note that though I like what Arduino does for us, I absolutely do not enjoy Arduino coding. It just seems to tedious and too easy to screw up. So this is a rather easy project with no soldering and not a lot creativity
-b. Get the [default color sketch working](https://github.com/Xinyuan-LilyGO/TTGO-T-Display/blob/master/TTGO-T-Display.ino)
-c. If it works - awesome - we're going to modify that script directly to do what we want. Replace the entirety of the INO file with the contents of `\Halo Mini Recon\TTGO-T-Display.ino` file.
-d. Take deep breath, compile, and hope that it all works. If it doesn't - wow - I don't know why either!
+1. Download the absolute latest Arduino IDE. Make sure you do not accidentally use a wrong previously installed version. Please note that though I like what Arduino does for us, I absolutely do not enjoy Arduino coding. It just seems to tedious and too easy to screw up. So this is a rather easy project with no soldering and not a lot creativity
+2. Get the [default color sketch working](https://github.com/Xinyuan-LilyGO/TTGO-T-Display/blob/master/TTGO-T-Display.ino)
+3. If it works - awesome - we're going to modify that script directly to do what we want. Replace the entirety of the INO file with the contents of `\Halo Mini Recon\TTGO-T-Display.ino` file.
+4. Take deep breath, compile, and hope that it all works. If it doesn't - wow - I don't know why either!
 
 ### Devices should now be in working state.
 
